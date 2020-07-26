@@ -9,15 +9,21 @@ function toChar(_, index) {
 
 function toColumn(col) {
    return `
-       <div class="column">
-           ${col}
-           <div class="col-resize" data-resize="col"></div>
-       </div>
-   `;
+         <div class="column" data-parent="row">${col}
+             <div class="col-resize" data-resize="col"></div>
+         </div>
+     `;
 }
 
-function toCell() {
-   return `<div class="cell" contenteditable></div>`;
+function toCell(indexCol, indexRow) {
+   return `
+         <div 
+             class="cell" 
+             contenteditable 
+             data-row=${indexRow}
+             data-col="${toChar(null, indexCol)}" 
+         ></div>
+     `;
 }
 
 function createRow(index, row) {
@@ -26,16 +32,16 @@ function createRow(index, row) {
       : '';
 
    return `
-      <div class="row" data-parent="row">
-        <div class="row-info">
-            ${index ? index : ''}
-            ${resizer}
-        </div>
-         <div class="row-data">
-            ${row}
+       <div class="row" data-parent="row">
+         <div class="row-info">
+             ${index ? index : ''}
+             ${resizer}
          </div>
-      </div>
-   `;
+          <div class="row-data">
+             ${row}
+          </div>
+       </div>
+    `;
 }
 
 export function createTable(countRows = 15) {
@@ -50,12 +56,12 @@ export function createTable(countRows = 15) {
 
    rows.push(createRow(null, cols));
 
-   const cells = new Array(colsCount)
-      .fill('')
-      .map(toCell) // () => toCell()
-      .join('');
-
    for (let i = 1; i <= countRows; i++) {
+      const cells = new Array(colsCount)
+         .fill('')
+         .map((_, index) => toCell(index, i)) // () => toCell()
+         .join('');
+
       rows.push(createRow(i, cells));
    }
 
