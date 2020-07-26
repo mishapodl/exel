@@ -91,5 +91,5 @@ function getData(event, resizer, coordinates) {
    resizer.heightRow = resizer.parent.offsetHeight;
 
    coordinates.startX = event.x;
-   coordinates.startY = event.y;
+   coordinates.startY = event.y
 }

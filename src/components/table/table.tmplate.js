@@ -65,5 +65,5 @@ export function createTable(countRows = 15) {
       rows.push(createRow(i, cells));
    }
 
-   return rows.join('');
+   return rows.join('')
 }
