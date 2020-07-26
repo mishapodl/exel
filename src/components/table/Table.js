@@ -1,5 +1,6 @@
 import { ExcelComponents } from '@core/ExcelComponents';
 import { createTable } from '@/components/table/table.tmplate';
+import { $ } from '@core/dom';
 
 export class Table extends ExcelComponents {
    static className = 'excel__table';
@@ -7,7 +8,7 @@ export class Table extends ExcelComponents {
    constructor($root) {
       super($root, {
          name: 'Table',
-         listeners: ['mousedown', 'mousemove', 'mouseup', 'mouseleave']
+         listeners: ['mousedown']
       });
       this.resizer = {
          parent: null,
@@ -34,25 +35,23 @@ export class Table extends ExcelComponents {
       if (event.target.dataset.resize) {
          getData(event, resizer, coordinates);
       }
-   }
 
-   onMousemove(event) {
-      const { resizer, coordinates } = this;
+      document.onmousemove = event => {
+         const { resizer, coordinates } = this;
 
-      if (resizer.parent !== null) {
-         coordinates.endX = event.x;
-         coordinates.endY = event.y;
-         resize(resizer, coordinates);
-      }
-   }
+         if (resizer.parent !== null) {
+            coordinates.endX = event.x;
+            coordinates.endY = event.y;
+            resize(resizer, coordinates);
+         }
+      };
 
-   onMouseup(event) {
-      this.resizer.parent = null;
-      this.coordinates = {};
-   }
+      document.onmouseup = () => {
+         document.onmousemove = null;
 
-   onMouseleave() {
-      this.coordinates = {};
+         this.resizer.parent = null;
+         this.coordinates = {};
+      };
    }
 }
 
@@ -84,7 +83,7 @@ function resize(resizer, coordinates) {
 function getData(event, resizer, coordinates) {
    const { dataset, parentNode } = event.target;
 
-   resizer.parent = event.target.closest('[data-parent="row"]');
+   resizer.parent = event.target.closest('[data-parent="resizeable"]');
    resizer.parentName = parentNode.textContent.trim();
    resizer.typeResizer = dataset.resize;
 

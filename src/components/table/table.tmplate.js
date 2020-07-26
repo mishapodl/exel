@@ -9,7 +9,7 @@ function toChar(_, index) {
 
 function toColumn(col) {
    return `
-         <div class="column" data-parent="row">${col}
+         <div class="column" data-parent="resizeable">${col}
              <div class="col-resize" data-resize="col"></div>
          </div>
      `;
@@ -32,7 +32,7 @@ function createRow(index, row) {
       : '';
 
    return `
-       <div class="row" data-parent="row">
+       <div class="row" data-parent="resizeable">
          <div class="row-info">
              ${index ? index : ''}
              ${resizer}
