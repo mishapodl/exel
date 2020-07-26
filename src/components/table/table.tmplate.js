@@ -8,7 +8,12 @@ function toChar(_, index) {
 }
 
 function toColumn(col) {
-   return `<div class="column">${col}</div>`;
+   return `
+       <div class="column">
+           ${col}
+           <div class="col-resize" data-resize="col"></div>
+       </div>
+   `;
 }
 
 function toCell() {
@@ -16,9 +21,16 @@ function toCell() {
 }
 
 function createRow(index, row) {
+   const resizer = index
+      ? '<div class="row-resize" data-resize="row"></div>'
+      : '';
+
    return `
-      <div class="row">
-        <div class="row-info">${index ? index : ''}</div>
+      <div class="row" data-parent="row">
+        <div class="row-info">
+            ${index ? index : ''}
+            ${resizer}
+        </div>
          <div class="row-data">
             ${row}
          </div>
