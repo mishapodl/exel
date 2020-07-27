@@ -10,86 +10,54 @@ export class Table extends ExcelComponents {
          name: 'Table',
          listeners: ['mousedown']
       });
-      this.resizer = {
-         parent: null,
-         parentName: '',
-         typeResizer: '',
-         widthCol: null,
-         heightRow: null
-      };
-      this.coordinates = {
-         startX: null,
-         endX: null,
-         startY: null,
-         endY: null
-      };
    }
 
    toHTML() {
-      return createTable(2);
+      return createTable(5);
    }
 
    onMousedown(event) {
-      const { resizer, coordinates } = this;
+      if (!event.target.dataset.resize) return;
 
-      if (event.target.dataset.resize) {
-         getData(event, resizer, coordinates);
-      }
+      const $resizer = $(event.target);
+      const $parent = $($resizer.closest('[data-resizeable="resizeable"]'));
+
+      const resizer = {
+         $coord: $parent.coord,
+         $name: $parent.text,
+         $type: $resizer.dataset.resize || null,
+         $style: $parent.style.style
+      };
+
+      event.target.classList.add('lines');
+
+      const $selector = '[data-'+resizer.$type+'="'+resizer.$name+'"]';
+      const $cells = document.querySelectorAll($selector);
 
       document.onmousemove = event => {
-         const { resizer, coordinates } = this;
-
-         if (resizer.parent !== null) {
-            coordinates.endX = event.x;
-            coordinates.endY = event.y;
-            resize(resizer, coordinates);
-         }
+         resize(event, resizer, $cells);
       };
 
       document.onmouseup = () => {
+         event.target.classList.remove('lines');
          document.onmousemove = null;
-
-         this.resizer.parent = null;
-         this.coordinates = {};
       };
    }
 }
 
-function resize(resizer, coordinates) {
-   const { startX, endX, startY, endY } = coordinates;
-   const {
-      parent: { style },
-      typeResizer,
-      parentName,
-      widthCol,
-      heightRow
-   } = resizer;
+function resize({ pageX, pageY }, resizer, cells) {
+   const { $type, $style, $coord } = resizer;
 
-   const width = widthCol + (endX - startX) + 'px';
-   const height = heightRow + (endY - startY) + 'px';
+   const width = pageX- $coord.x + 'px';
+   const height = pageY - $coord.y + 'px';
 
-   const selector = `[data-${typeResizer}=\"${parentName}\"]`;
-   const cells = document.querySelectorAll(selector);
+   $type === 'col'
+      ? $style.width = width
+      : $style.height = height;
 
-   typeResizer === 'col' ? style.width = width : style.height = height;
-
-   [...cells].forEach((cell) => {
-      typeResizer === 'col'
+   cells.forEach((cell) => {
+      $type === 'col'
          ? (cell.style.width = width)
          : (cell.style.height = height);
    });
-}
-
-function getData(event, resizer, coordinates) {
-   const { dataset, parentNode } = event.target;
-
-   resizer.parent = event.target.closest('[data-parent="resizeable"]');
-   resizer.parentName = parentNode.textContent.trim();
-   resizer.typeResizer = dataset.resize;
-
-   resizer.widthCol = resizer.parent.offsetWidth;
-   resizer.heightRow = resizer.parent.offsetHeight;
-
-   coordinates.startX = event.x;
-   coordinates.startY = event.y
 }

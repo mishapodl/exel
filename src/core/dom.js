@@ -39,6 +39,26 @@ class DOM {
    off(eventType, callback) {
       this.$el.removeEventListener(eventType, callback);
    }
+
+   closest(selector) {
+      return this.$el.closest(selector);
+   }
+
+   get dataset() {
+      return this.$el.dataset;
+   }
+
+   get coord() {
+      return this.$el.getBoundingClientRect();
+   }
+
+   get text() {
+      return this.$el.textContent.trim();
+   }
+
+   get style() {
+      return this.$el;
+   }
 }
 
 export function $(selector) {

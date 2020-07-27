@@ -76,6 +76,15 @@
       &:hover {
          opacity: 1;
       }
+      &.lines {
+         opacity: 1;
+      }
+      &.lines:after {
+         position: absolute;
+         display: block;
+         content: '';
+         background: #3c74ff;
+      }
    }
 
    .col-resize {
@@ -86,6 +95,12 @@
       &:hover {
          cursor: col-resize;
       }
+      &.lines:after {
+         top: 0;
+         right: 0;
+         width: 1px;
+         height: calc(100vh - 100px);
+      }
    }
 
    .row-resize {
@@ -95,6 +110,12 @@
 
       &:hover {
          cursor: row-resize;
+      }
+      &.lines:after {
+         bottom: 0;
+         left: 0;
+         width: 100vw;
+         height: 1px;
       }
    }
 
