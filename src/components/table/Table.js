@@ -13,7 +13,7 @@ export class Table extends ExcelComponents {
    }
 
    toHTML() {
-      return createTable(5);
+      return createTable(20);
    }
 
    onMousedown(event) {
