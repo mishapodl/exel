@@ -44,6 +44,10 @@ class DOM {
       return this.$el.closest(selector);
    }
 
+   findAll(selector) {
+      return this.$el.querySelectorAll(selector);
+   }
+
    get dataset() {
       return this.$el.dataset;
    }
