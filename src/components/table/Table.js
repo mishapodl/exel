@@ -47,6 +47,7 @@ export class Table extends ExcelComponents {
 
 function resize(event, resizer, $parent, $root, resizedEnd = false) {
    const { $type, $coord, $line } = resizer;
+
    const right = $coord.width - (event.pageX - $coord.x) + 'px';
    const bottom = $coord.height - (event.pageY - $coord.y) + 'px';
 
@@ -59,17 +60,17 @@ function resize(event, resizer, $parent, $root, resizedEnd = false) {
 
 function resizeCells(event, resizer, $parent, $root) {
    const { $type, $coord, $line, $name } = resizer;
-   const $selector = '[data-' + $type + '="' + $name + '"]';
-   const $cells = $root.findAll($selector);
+
    const width = (event.pageX - $coord.x) + 'px';
    const height = (event.pageY - $coord.y) + 'px';
 
    $type === 'col' ? $parent.css({ width }) : $parent.css({ height });
    $type === 'col' ? $line.css({ right: 0 }) : $line.css({ bottom: 0 });
 
-   $cells.forEach((cell) => {
-      $type === 'col'
-         ? cell.style.width = width
-         : cell.style.height = height;
-   });
+   $root.findAll('[data-' + $type + '="' + $name + '"]')
+      .forEach((cell) => {
+         $type === 'col'
+            ? cell.style.width = width
+            : cell.style.height = height;
+      });
 }
