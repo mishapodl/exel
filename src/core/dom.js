@@ -52,6 +52,18 @@ class DOM {
       Object.assign(this.$el.style, styles);
    }
 
+   classAdd(className) {
+      this.$el.classList.add(className);
+   }
+
+   classRemove(className) {
+      this.$el.classList.remove(className);
+   }
+
+   classToggle(className) {
+      this.$el.classList.toggle(className);
+   }
+
    get dataset() {
       return this.$el.dataset;
    }
