@@ -48,6 +48,10 @@ class DOM {
       return this.$el.querySelectorAll(selector);
    }
 
+   css(styles = {}) {
+      Object.assign(this.$el.style, styles);
+   }
+
    get dataset() {
       return this.$el.dataset;
    }

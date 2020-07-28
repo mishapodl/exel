@@ -20,13 +20,15 @@
         "keyword-spacing": "warn",
         "operator-linebreak": "off",
         "no-debugger": "warn",
-        "no-trailing-spaces": "warn",
+        "no-trailing-spaces": "off",
         "no-empty": "warn",
         "linebreak-style": "off",
         "array-bracket-spacing": "warn",
         "semi": "warn",
-        "max-len": "warn",
-        "spaced-comment": "warn"
+        "max-len": ["warn",  90],
+        "spaced-comment": "warn",
+        "no-useless-escape": "off",
+        "guard-for-in": "off"
     },
     "extends": [
         "eslint:recommended",
