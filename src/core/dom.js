@@ -1,4 +1,4 @@
-class DOM {
+export class DOM {
    constructor(selector) {
       this.$el =
          typeof selector === 'string'
@@ -54,6 +54,22 @@ class DOM {
 
    findAll(selector) {
       return this.$el.querySelectorAll(selector);
+   }
+
+   find(selector) {
+      return $(this.$el.querySelector(selector));
+   }
+
+   addClass(classes) {
+      this.$el.classList.add(classes);
+   }
+
+   removeClass(className) {
+      this.$el.classList.remove(className);
+   }
+
+   toggleClass(className) {
+      this.$el.classList.toggle(className);
    }
 
    css(styles = {}) {
