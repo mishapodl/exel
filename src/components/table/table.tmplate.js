@@ -3,11 +3,11 @@ const CODES = {
    Z: 90
 };
 
-function toChar(_, index) {
+function toChar (_, index) {
    return String.fromCharCode(CODES.A + index);
 }
 
-function toColumn(col, index) {
+function toColumn (col, index) {
    return `
     <div class="column" data-type="resizable" data-col="${index}">
       ${col}
@@ -16,8 +16,8 @@ function toColumn(col, index) {
   `;
 }
 
-function toCell(row) {
-   return function(_, col) {
+function toCell (row) {
+   return function (_, col) {
       return `
        <div 
           class="cell" 
@@ -30,7 +30,7 @@ function toCell(row) {
    };
 }
 
-function createRow(index, content) {
+function createRow (index, content) {
    const resizer = index
       ? '<div class="row-resize" data-resize="row"></div>'
       : '';
@@ -48,7 +48,7 @@ function createRow(index, content) {
    `;
 }
 
-export function createTable(countRows = 15) {
+export function createTable (countRows = 15) {
    const colsCount = CODES.Z - CODES.A + 1;
    const rows = [];
 

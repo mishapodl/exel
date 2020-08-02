@@ -7,7 +7,7 @@
     },
     "rules": {
         "require-jsdoc": "off",
-        "indent": ["warn", 3],
+        "indent": "off",
         "arrow-parens":"off",
         "comma-dangle":"off",
         "eol-last": "off",

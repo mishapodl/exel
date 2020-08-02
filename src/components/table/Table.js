@@ -1,26 +1,29 @@
 import { ExcelComponents } from '@core/ExcelComponents';
-import { TableSelection } from '@/components/table/TableSelection';
-import { $ } from '@core/dom';
-import { isCell, shouldResize } from '@/components/table/table.functions';
-import { createTable } from '@/components/table/table.tmplate';
-import { resizeHandler } from '@/components/table/table.resize';
+import { TableSelection } from './TableSelection';
+import { isCell, nextSelector, shouldResize } from './table.functions';
+import { createTable } from './table.tmplate';
+import { resizeHandler } from './table.resize';
+import { typeSelect, selectDefault } from './table.selection';
+import { keys } from './constants';
 
 export class Table extends ExcelComponents {
    static className = 'excel__table';
 
    constructor($root) {
       super($root, {
-         listeners: ['mousedown']
+         listeners: ['mousedown', 'keydown']
       });
    }
+
    prepare() {
       this.selection = new TableSelection();
    }
+
    init() {
       super.init();
-
-      this.selection.select(this.$root.find('[data-id="0:0"]'));
+      selectDefault(this.$root, this.selection);
    }
+
    toHTML() {
       return createTable(20);
    }
@@ -29,17 +32,18 @@ export class Table extends ExcelComponents {
       if (shouldResize(event)) {
          resizeHandler(this.$root, event);
       } else if (isCell(event)) {
-         this.select(event);
+         typeSelect(this.$root, this.selection, event);
       }
    }
 
-   select(event) {
-      const $target = $(event.target);
-
-      if (!event.ctrlKey) {
-         this.selection.select($target);
-      } else {
-         this.selection.selectGroup($target);
+   onKeydown(event) {
+      const { key, shiftKey } = event;
+      if (keys.includes(key) && !shiftKey) {
+         event.preventDefault();
+         const id = this.selection.current.id(true);
+         const $next = this.$root.find(nextSelector(key, id));
+         this.selection.select($next);
       }
    }
 }
+
