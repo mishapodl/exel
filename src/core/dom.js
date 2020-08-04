@@ -45,12 +45,12 @@ export class DOM {
    }
 
    id(parse) {
-      if(parse) {
+      if (parse) {
          const parsed = this.id().split(':');
          return {
             row: +parsed[0],
             col: +parsed[1]
-         }
+         };
       }
       return this.data.id;
    }
@@ -73,10 +73,12 @@ export class DOM {
 
    addClass(classes) {
       this.$el.classList.add(classes);
+      return this;
    }
 
    removeClass(className) {
       this.$el.classList.remove(className);
+      return this;
    }
 
    toggleClass(className) {
@@ -90,10 +92,21 @@ export class DOM {
             this.$el.style[key] = styles[key];
          });
    }
-   addFocus() {
+
+   focus() {
       this.$el.focus();
       return this;
    }
+
+   text(text) {
+      if (typeof text === 'string') {
+         this.$el.textContent = text;
+         return this;
+      }
+      return this.$el.textContent;
+   }
+
+   fn() {}
 }
 
 export function $(selector) {

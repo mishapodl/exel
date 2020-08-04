@@ -3,6 +3,14 @@ import { ExcelComponents } from '@core/ExcelComponents';
 export class Header extends ExcelComponents {
    static className = 'excel__header';
 
+   constructor($root, options) {
+      super($root, {
+         name: 'Header',
+         listeners: [],
+         ...options
+      });
+   }
+
    toHTML() {
       return `
          <input

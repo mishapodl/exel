@@ -31,7 +31,3 @@ function multiSelect ($root, selection, target) {
       .map(id => $root.find('[data-id="' + id + '"]'));
    selection.selectGroup($cells);
 }
-
-export function selectDefault ($root, selection) {
-   selection.select($root.find('[data-id="0:0"]'));
-}
