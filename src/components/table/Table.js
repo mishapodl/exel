@@ -34,6 +34,8 @@ export class Table extends ExcelComponents {
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
       });
+
+      this.$subscribe(state => console.log('table: ', state));
    }
 
    selectCell($cell) {
@@ -50,6 +52,7 @@ export class Table extends ExcelComponents {
          resizeHandler(this.$root, event);
       } else if (isCell(event)) {
          typeSelect(this.$root, this.selection, event);
+         this.selectCell($(event.target));
       }
    }
 
