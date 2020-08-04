@@ -15,6 +15,10 @@ export class DomListener {
          const method = getTypeName(listener);
          const event = this[method].bind(this);
 
+         if (!listener) {
+            throw new Error(`Listener ${listener} not exist in '${this.name}`);
+         }
+
          this.$root.on(listener, event);
          this.events.push(event);
       });

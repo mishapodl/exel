@@ -1,4 +1,4 @@
-class DOM {
+export class DOM {
    constructor(selector) {
       this.$el =
          typeof selector === 'string'
@@ -44,6 +44,17 @@ class DOM {
       return this.$el.dataset;
    }
 
+   id(parse) {
+      if (parse) {
+         const parsed = this.id().split(':');
+         return {
+            row: +parsed[0],
+            col: +parsed[1]
+         };
+      }
+      return this.data.id;
+   }
+
    closest(selector) {
       return $(this.$el.closest(selector));
    }
@@ -56,6 +67,24 @@ class DOM {
       return this.$el.querySelectorAll(selector);
    }
 
+   find(selector) {
+      return $(this.$el.querySelector(selector));
+   }
+
+   addClass(classes) {
+      this.$el.classList.add(classes);
+      return this;
+   }
+
+   removeClass(className) {
+      this.$el.classList.remove(className);
+      return this;
+   }
+
+   toggleClass(className) {
+      this.$el.classList.toggle(className);
+   }
+
    css(styles = {}) {
       Object
          .keys(styles)
@@ -63,6 +92,21 @@ class DOM {
             this.$el.style[key] = styles[key];
          });
    }
+
+   focus() {
+      this.$el.focus();
+      return this;
+   }
+
+   text(text) {
+      if (typeof text === 'string') {
+         this.$el.textContent = text;
+         return this;
+      }
+      return this.$el.textContent;
+   }
+
+   fn() {}
 }
 
 export function $(selector) {
