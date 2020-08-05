@@ -34,8 +34,6 @@ export class Table extends ExcelComponents {
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
       });
-
-      this.$subscribe(state => console.log('table: ', state));
    }
 
    selectCell($cell) {
@@ -47,12 +45,20 @@ export class Table extends ExcelComponents {
       return createTable(20);
    }
 
+   async resizeTable(event) {
+      try {
+         const data = await resizeHandler(this.$root, event);
+         this.$dispatch({ type: 'TABLE_RESIZE', data });
+      } catch (err) {
+         console.warn('Table: ', err.message);
+      }
+   }
+
    onMousedown(event) {
       if (shouldResize(event)) {
-         resizeHandler(this.$root, event);
+         this.resizeTable(event).then(() => {});
       } else if (isCell(event)) {
          typeSelect(this.$root, this.selection, event);
-         this.selectCell($(event.target));
       }
    }
 
