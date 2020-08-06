@@ -35,18 +35,6 @@ export class Table extends ExcelComponents {
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
       });
-
-      this.prevSize();
-   }
-
-   prevSize() {
-      const colState = this.$state().colState;
-
-      colState.forEach(({ id, value }) => {
-         this.$root.find(`[data-col="${id}"]`).css({ width: value + 'px' });
-         this.$root.findAll(`[data-col="${id}"]`)
-            .forEach(el => el.style.width = value + 'px');
-      });
    }
 
    selectCell($cell) {
@@ -55,7 +43,7 @@ export class Table extends ExcelComponents {
    }
 
    toHTML() {
-      return createTable(20);
+      return createTable(20, this.$state());
    }
 
    async resizeTable(event) {

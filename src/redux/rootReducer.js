@@ -5,8 +5,8 @@ export function rootReducer(state, action) {
 
    switch (action.type) {
       case TABLE_RESIZE:
-         prevState = state.colState || [];
-         prevState = [...state.colState, action.data];
+         prevState = state.colState || {};
+         prevState[action.data.id] = action.data.value;
 
          return {
             ...state,
