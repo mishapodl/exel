@@ -89,6 +89,7 @@
    .row-resize {
       left: 0;
       height: 4px;
+      bottom: -1px;
 
       &:hover {
          cursor: row-resize;

@@ -4,9 +4,14 @@ const CODES = {
 };
 
 const DEFAULT_WIDTH = 120;
+const DEFAULT_HEIGHT = 24;
 
 function getWidth(col, colState) {
    return (colState[col] || DEFAULT_WIDTH) + 'px';
+}
+
+function getHeight(row, rowState) {
+   return (rowState[row] || DEFAULT_HEIGHT) + 'px';
 }
 
 function toChar(_, index) {
@@ -50,13 +55,18 @@ function toCell(row, { colState }) {
    };
 }
 
-function createRow(index, content) {
+function createRow(index, content, { rowState }) {
    const resizer = index
       ? '<div class="row-resize" data-resize="row"></div>'
       : '';
 
    return `
-      <div class="row" data-type="resizable">
+      <div 
+        class="row" 
+        data-type="resizable" 
+        data-row="${index}" 
+        style="height: ${getHeight(index, rowState)}"
+      >
         <div class="row-info">
             ${index ? index : ''}
             ${resizer}
@@ -79,7 +89,7 @@ export function createTable(countRows = 15, state = {}) {
       .map(toColumn)
       .join('');
 
-   rows.push(createRow(null, cols));
+   rows.push(createRow(null, cols, state));
 
    for (let row = 0; row < countRows; row++) {
       const cells = new Array(colsCount)
@@ -87,7 +97,7 @@ export function createTable(countRows = 15, state = {}) {
          .map(toCell(row, state))
          .join('');
 
-      rows.push(createRow(row + 1, cells));
+      rows.push(createRow(row + 1, cells, state));
    }
 
    return rows.join('');
