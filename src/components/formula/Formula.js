@@ -30,11 +30,11 @@ export class Formula extends ExcelComponents {
 
       this.$formula = this.$root.find('#formula');
 
-      this.$on('table:select', $cell => {
+      this.$on('table:select', ($cell = '') => {
          this.$formula.text($cell.text());
       });
-      this.$on('table:input', $cell => {
-         this.$formula.text($cell.text());
+      this.$subscribe(state => {
+         this.$formula.text(state.currentText);
       });
    }
 
@@ -43,7 +43,7 @@ export class Formula extends ExcelComponents {
    }
 
    onKeydown(event) {
-      if ('Enter' || 'Tab' === event.key) {
+      if ('Enter' === event.key || 'Tab' === event.key) {
          event.preventDefault();
          this.$emit('formula:focusCell', event.key);
       }

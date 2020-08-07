@@ -31,9 +31,13 @@ export class Table extends ExcelComponents {
 
       this.$on('formula:input', text => {
          this.selection.current.text(text);
+         this.updateTextInStore(text);
       });
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
+      });
+      this.$subscribe(state => {
+         this.selection.current.text(state.currentText);
       });
    }
 
@@ -61,6 +65,7 @@ export class Table extends ExcelComponents {
       } else if (isCell(event)) {
          typeSelect(this.$root, this.selection, event);
       }
+      this.$emit('table:select', this.selection.current);
    }
 
    onKeydown(event) {
@@ -75,8 +80,15 @@ export class Table extends ExcelComponents {
       }
    }
 
+   updateTextInStore(value) {
+      this.$dispatch(actions.cellsData({
+         id: this.selection.current.id(),
+         value
+      }));
+   }
+
    onInput(event) {
-      this.$emit('table:input', $(event.target));
+      this.updateTextInStore($(event.target).text());
    }
 }
 

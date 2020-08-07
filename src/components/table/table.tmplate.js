@@ -40,17 +40,22 @@ function withWidthFrom({ colState }) {
    };
 }
 
-function toCell(row, { colState }) {
+function getText(id, dataState) {
+   return dataState[id] || '';
+}
+
+function toCell(row, { colState, dataState }) {
    return function (_, col) {
+      const id = row + ':' + col;
       return `
        <div 
           class="cell" 
           contenteditable 
           data-col="${col}" 
           data-type="cell" 
-          data-id="${row}:${col}"
+          data-id="${id}"
           style="width: ${getWidth(col, colState)}"
-       ></div>
+       >${getText(id, dataState)}</div>
      `;
    };
 }
@@ -59,7 +64,6 @@ function createRow(index, content, { rowState }) {
    const resizer = index
       ? '<div class="row-resize" data-resize="row"></div>'
       : '';
-
    return `
       <div 
         class="row" 
