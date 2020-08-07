@@ -1,27 +1,21 @@
 import { TABLE_RESIZE } from './types';
 
 export function rootReducer(state, action) {
-   let prevStateCol;
-   let prevStateRow;
+   let prevState;
+   let field;
 
    switch (action.type) {
       case TABLE_RESIZE:
-         prevStateCol = state.colState || {};
-         prevStateRow = state.rowState || {};
+         const { id, type, value } = action.data;
+         field = type === 'col' ? 'colState' : 'rowState';
 
-         if (action.data.type === 'col') {
-            prevStateCol[action.data.id] = action.data.value;
-         } else {
-            prevStateRow[action.data.id] = action.data.value;
-         }
+         prevState = state[field];
+         prevState[id] = value;
 
          return {
             ...state,
-            colState: prevStateCol,
-            rowState: prevStateRow
+            [field]: prevState
          };
-      case '':
-         return {};
       default:
          return state;
    }
