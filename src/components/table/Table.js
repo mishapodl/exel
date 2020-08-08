@@ -36,9 +36,9 @@ export class Table extends ExcelComponents {
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
       });
-      this.$subscribe(state => {
-         this.selection.current.text(state.currentText);
-      });
+      // this.$subscribe(state => {
+      //    this.selection.current.text(state.currentText);
+      // });
    }
 
    selectCell($cell) {

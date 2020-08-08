@@ -27,7 +27,8 @@
         "semi": "warn",
         "max-len": "warn",
         "spaced-comment": "warn",
-        "no-case-declarations": "off"
+        "no-case-declarations": "off",
+        "padded-blocks": "warn"
     },
     "extends": [
         "eslint:recommended",
