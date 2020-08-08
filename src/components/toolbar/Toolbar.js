@@ -1,4 +1,6 @@
 import { ExcelComponents } from '@core/ExcelComponents';
+import { createToolbar } from '@/components/toolbar/toolbar.template';
+import { $ } from '@core/dom';
 
 export class Toolbar extends ExcelComponents {
    static className = 'excel__toolbar';
@@ -6,31 +8,16 @@ export class Toolbar extends ExcelComponents {
    constructor($root, options) {
       super($root, {
          name: 'Toolbar',
-         listeners: [],
+         listeners: ['click'],
          ...options
       });
    }
 
    toHTML() {
-      return `
-         <div class="button">
-            <span class="material-icons">format_align_left</span>
-         </div>
-         <div class="button">
-            <span class="material-icons">format_align_center</span>
-         </div>
-         <div class="button">
-            <span class="material-icons">format_align_right</span>
-         </div>
-         <div class="button">
-            <span class="material-icons">format_italic</span>
-         </div>
-         <div class="button">
-            <span class="material-icons">format_bold</span>
-         </div>
-         <div class="button">
-            <span class="material-icons">format_underlined</span>
-         </div>
-      `;
+      return createToolbar();
+   }
+
+   onClick(event) {
+      console.log($(event.target).data);
    }
 }
