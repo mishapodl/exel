@@ -7,6 +7,7 @@ import { typeSelect } from './table.selection';
 import { keys } from './constants';
 import { $ } from '@core/dom';
 import * as actions from '@/redux/actions';
+import { defaultValues } from '@/constants';
 
 export class Table extends ExcelComponent {
    static className = 'excel__table';
@@ -33,17 +34,21 @@ export class Table extends ExcelComponent {
          this.selection.current.text(text);
          this.updateTextInStore(text);
       });
+
       this.$on('formula:focusCell', () => {
          this.selection.current.focus();
       });
-      // this.$subscribe(state => {
-      //    this.selection.current.text(state.currentText);
-      // });
+
+      this.$on('toolbar:applyStyles', styles => {
+         this.selection.applyStyles(styles);
+      });
    }
 
    selectCell($cell) {
       this.selection.select($cell);
       this.$emit('table:select', $cell);
+
+      $cell.getStyles(Object.keys(defaultValues));
    }
 
    toHTML() {
@@ -64,8 +69,8 @@ export class Table extends ExcelComponent {
          this.resizeTable(event).then(() => {});
       } else if (isCell(event)) {
          typeSelect(this.$root, this.selection, event);
+         this.selectCell($(event.target));
       }
-      this.$emit('table:select', this.selection.current);
    }
 
    onKeydown(event) {

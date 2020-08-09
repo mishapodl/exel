@@ -93,6 +93,13 @@ export class DOM {
          });
    }
 
+   getStyles(styles = []) {
+      return styles.reduce((res, s) => {
+         res[s] = this.$el.style[s];
+         return res;
+      }, {});
+   }
+
    focus() {
       this.$el.focus();
       return this;
