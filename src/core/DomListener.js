@@ -7,26 +7,26 @@ export class DomListener {
       }
       this.$root = $root || '';
       this.listeners = listeners;
-      this.events = [];
    }
 
    initDOMListeners() {
       this.listeners.forEach(listener => {
          const method = getTypeName(listener);
-         const event = this[method].bind(this);
-
-         if (!listener) {
-            throw new Error(`Listener ${listener} not exist in '${this.name}`);
+         if (!this[method]) {
+            const name = this.name || '';
+            throw new Error(
+               `Method ${method} is not implemented in ${name} Component`
+            );
          }
-
-         this.$root.on(listener, event);
-         this.events.push(event);
+         this[method] = this[method].bind(this);
+         this.$root.on(listener, this[method]);
       });
    }
 
    removeDOMListeners() {
-      this.listeners.forEach((listener, index) => {
-         this.$root.off(listener, this.events[index]);
+      this.listeners.forEach(listener => {
+         const method = getTypeName(listener);
+         this.$root.off(listener, this[method]);
       });
    }
 }
