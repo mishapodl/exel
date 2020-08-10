@@ -1,32 +1,44 @@
 import {
-   TABLE_RESIZE,
    CHANGE_TEXT,
    CHANGE_STYLES,
-   APPLY_STYLES,
+   TABLE_RESIZE,
+   APPLY_STYLE,
    CHANGE_TITLE
 } from './types';
 
-export const tableResize = data => ({
-   type: TABLE_RESIZE,
-   data
-});
+// Action Creator
+export function tableResize(data) {
+   return {
+      type: TABLE_RESIZE,
+      data
+   };
+}
 
-export const cellsData = data => ({
-   type: CHANGE_TEXT,
-   data
-});
+export function changeText(data) {
+   return {
+      type: CHANGE_TEXT,
+      data
+   };
+}
 
-export const changeStyles = data => ({
-   type: CHANGE_STYLES,
-   data
-});
+export function changeStyles(data) {
+   return {
+      type: CHANGE_STYLES,
+      data
+   };
+}
 
-export const applyStyles = data => ({
-   type: APPLY_STYLES,
-   data
-});
+// value, ids
+export function applyStyle(data) {
+   return {
+      type: APPLY_STYLE,
+      data
+   };
+}
 
-export const changeTitle = data => ({
-   type: CHANGE_TITLE,
-   data
-});
+export function changeTitle(data) {
+   return {
+      type: CHANGE_TITLE,
+      data
+   };
+}

@@ -1,8 +1,8 @@
 import {
+   CHANGE_TEXT,
    CHANGE_STYLES,
    TABLE_RESIZE,
-   CHANGE_TEXT,
-   APPLY_STYLES,
+   APPLY_STYLE,
    CHANGE_TITLE
 } from './types';
 
@@ -28,7 +28,7 @@ export function rootReducer(state, action) {
             ...state,
             currentStyles: action.data
          };
-      case APPLY_STYLES:
+      case APPLY_STYLE:
          field = 'stylesState';
          val = state[field] || {};
          action.data.ids.forEach(id => {
@@ -43,10 +43,7 @@ export function rootReducer(state, action) {
             }
          };
       case CHANGE_TITLE:
-         return {
-            ...state,
-            title: action.data
-         };
+         return { ...state, title: action.data };
       default:
          return state;
    }

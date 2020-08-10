@@ -39,9 +39,9 @@ export function resizeHandler($root, event) {
          }
 
          resolve({
+            value,
             type,
-            id: $parent.data[type],
-            value
+            id: $parent.data[type]
          });
 
          $resizer.css({

@@ -11,9 +11,11 @@ import { initialState } from '@/redux/initialState';
 
 const store = createStore(rootReducer, initialState);
 
-store.subscribe(debounce(state => {
+const stateListener = debounce(state => {
    storage('excel-state', state);
-}, 1000));
+}, 300);
+
+store.subscribe(stateListener);
 
 const excel = new Excel('#app', {
    components: [Header, Toolbar, Formula, Table],

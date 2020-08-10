@@ -1,53 +1,61 @@
-function toButton({ active, icon, value }) {
+function toButton(button) {
    const meta = `
-      data-type="button"
-      data-value='${JSON.stringify(value)}',
-   `;
+    data-type="button"
+    data-value='${JSON.stringify(button.value)}'
+  `;
    return `
-         <div class="button ${active ? 'active' : ''}" ${meta}>
-            <span class="material-icons" ${meta}>${icon}</span>
-         </div>
-      `;
+    <div 
+      class="button ${button.active ? 'active' : ''}"
+      ${meta}
+    >
+      <i 
+        class="material-icons"
+        ${meta}
+      >${button.icon}</i>
+    </div>
+  `;
 }
 
-export const createToolbar = state => {
-      const { fontWeight, textAlign, fontStyle, textDecoration } = state;
-      const buttons = [
-         {
-            icon: 'format_align_left',
-            active: textAlign === 'left',
-            value: { textAlign: 'left' }
+export function createToolbar(s) {
+   const buttons = [
+      {
+         value: { textAlign: 'left' },
+         icon: 'format_align_left',
+         active: s['textAlign'] === 'left'
+      },
+      {
+         value: { textAlign: 'center' },
+         icon: 'format_align_justify',
+         active: s['textAlign'] === 'center'
+      },
+      {
+         value: { textAlign: 'right' },
+         icon: 'format_align_right',
+         active: s['textAlign'] === 'right'
+      },
+      {
+         value: { fontWeight: s['fontWeight'] === 'bold' ? 'normal' : 'bold' },
+         icon: 'format_bold',
+         active: s['fontWeight'] === 'bold'
+      },
+      {
+         value: {
+            textDecoration: s['textDecoration'] === 'underline'
+               ? 'none'
+               : 'underline'
          },
-         {
-            icon: 'format_align_center',
-            active: textAlign === 'center',
-            value: { textAlign: 'center' }
+         icon: 'format_underlined',
+         active: s['textDecoration'] === 'underline'
+      },
+      {
+         value: {
+            fontStyle: s['fontStyle'] === 'italic'
+               ? 'normal'
+               : 'italic'
          },
-         {
-            icon: 'format_align_right',
-            active: textAlign === 'right',
-            value: { textAlign: 'right' }
-         },
-         {
-            icon: 'format_bold',
-            active: fontWeight === 'bold',
-            value: { fontWeight: fontWeight === 'bold' ? 'normal' : 'bold' }
-         },
-         {
-            icon: 'format_italic',
-            active: fontStyle === 'italic',
-            value: { fontStyle: fontStyle === 'italic' ? 'normal' : 'italic' }
-         },
-         {
-            icon: 'format_underlined',
-            active: textDecoration === 'underline',
-            value: {
-               textDecoration: textDecoration === 'underline'
-                  ? 'none'
-                  : 'underline'
-            }
-         }
-      ];
-      return buttons.map(toButton).join('');
-   }
-;
+         icon: 'format_italic',
+         active: s['fontStyle'] === 'italic'
+      }
+   ];
+   return buttons.map(toButton).join('');
+}

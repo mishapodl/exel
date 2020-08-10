@@ -1,3 +1,4 @@
+// Pure functions
 export function capitalize(string) {
    if (typeof string !== 'string') {
       return '';
@@ -18,7 +19,7 @@ export function storage(key, data = null) {
    if (!data) {
       return JSON.parse(localStorage.getItem(key));
    }
-   return localStorage.setItem(key, JSON.stringify(data));
+   localStorage.setItem(key, JSON.stringify(data));
 }
 
 export function isEqual(a, b) {
@@ -34,8 +35,8 @@ export function camelToDashCase(str) {
 
 export function toInlineStyles(styles = {}) {
    return Object.keys(styles)
-      .map(key => `${camelToDashCase(key)}:${styles[key]};`)
-      .join('');
+      .map(key => `${camelToDashCase(key)}: ${styles[key]}`)
+      .join(';');
 }
 
 export function debounce(fn, wait) {
@@ -43,8 +44,8 @@ export function debounce(fn, wait) {
    return function (...args) {
       const later = () => {
          clearTimeout(timeout);
-         // eslint-disable-next-line no-invalid-this
-         fn.apply(this, ...args);
+         // eslint-disable-next-line
+         fn.apply(this, args);
       };
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
