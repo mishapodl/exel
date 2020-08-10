@@ -47,8 +47,8 @@ export class Table extends ExcelComponent {
    selectCell($cell) {
       this.selection.select($cell);
       this.$emit('table:select', $cell);
-
-      $cell.getStyles(Object.keys(defaultValues));
+      const styles = $cell.getStyles(Object.keys(defaultValues));
+      this.$dispatch(actions.changeStyles(styles));
    }
 
    toHTML() {
@@ -69,8 +69,8 @@ export class Table extends ExcelComponent {
          this.resizeTable(event).then(() => {});
       } else if (isCell(event)) {
          typeSelect(this.$root, this.selection, event);
-         this.selectCell($(event.target));
       }
+      this.selectCell($(event.target));
    }
 
    onKeydown(event) {

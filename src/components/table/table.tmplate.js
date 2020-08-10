@@ -1,3 +1,6 @@
+import { defaultValues } from '@/constants';
+import { camelToDashCase } from '@core/utils';
+
 const CODES = {
    A: 65,
    Z: 90
@@ -47,6 +50,10 @@ function getText(id, dataState) {
 function toCell(row, { colState, dataState }) {
    return function (_, col) {
       const id = row + ':' + col;
+      const styles = Object.keys(defaultValues)
+         .map(key => `${camelToDashCase(key)}:${defaultValues[key]};`)
+         .join('');
+
       return `
        <div 
           class="cell" 
@@ -54,7 +61,7 @@ function toCell(row, { colState, dataState }) {
           data-col="${col}" 
           data-type="cell" 
           data-id="${id}"
-          style="width: ${getWidth(col, colState)}"
+          style="${styles} width: ${getWidth(col, colState)}"
        >${getText(id, dataState)}</div>
      `;
    };
