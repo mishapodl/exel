@@ -12,10 +12,7 @@ export function rootReducer(state, action) {
    switch (action.type) {
       case TABLE_RESIZE:
          field = action.data.type === 'col' ? 'colState' : 'rowState';
-         return {
-            ...state,
-            [field]: value(state, field, action)
-         };
+         return { ...state, [field]: value(state, field, action) };
       case CHANGE_TEXT:
          field = 'dataState';
          return {
@@ -24,10 +21,7 @@ export function rootReducer(state, action) {
             [field]: value(state, field, action)
          };
       case CHANGE_STYLES:
-         return {
-            ...state,
-            currentStyles: action.data
-         };
+         return { ...state, currentStyles: action.data };
       case APPLY_STYLE:
          field = 'stylesState';
          val = state[field] || {};
@@ -37,10 +31,7 @@ export function rootReducer(state, action) {
          return {
             ...state,
             [field]: val,
-            currentStyles: {
-               ...state.currentStyles,
-               ...action.data.value
-            }
+            currentStyles: { ...state.currentStyles, ...action.data.value }
          };
       case CHANGE_TITLE:
          return { ...state, title: action.data };
@@ -50,7 +41,7 @@ export function rootReducer(state, action) {
 }
 
 function value(state, field, action) {
-   const val = state[field];
+   const val = state[field] || {};
    val[action.data.id] = action.data.value;
    return val;
 }

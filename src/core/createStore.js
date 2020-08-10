@@ -1,4 +1,4 @@
-export function createStore(rootReducer, initialState) {
+export function createStore(rootReducer, initialState = {}) {
    let state = rootReducer({ ...initialState }, { type: '__INIT__' });
    let listeners = [];
 
@@ -11,14 +11,14 @@ export function createStore(rootReducer, initialState) {
             }
          };
       },
-
       dispatch(action) {
          state = rootReducer(state, action);
          listeners.forEach(listener => listener(state));
       },
-
       getState() {
-         return state;
+         return JSON.parse(JSON.stringify(state));
       }
    };
 }
+
+// Extra Task - Переписать на класс

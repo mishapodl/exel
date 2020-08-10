@@ -15,15 +15,9 @@ export class Formula extends ExcelComponent {
 
    toHTML() {
       return `
-         <div class="info">fx</div>
-         <div 
-            id="formula" 
-            class="input" 
-            contenteditable 
-            spellcheck="false"
-         >
-        </div>
-      `;
+      <div class="info">fx</div>
+      <div id="formula" class="input" contenteditable spellcheck="false"></div>
+    `;
    }
 
    init() {
@@ -41,13 +35,15 @@ export class Formula extends ExcelComponent {
    }
 
    onInput(event) {
-      this.$emit('formula:input', $(event.target).text());
+      const text = $(event.target).text();
+      this.$emit('formula:input', text);
    }
 
    onKeydown(event) {
-      if ('Enter' === event.key || 'Tab' === event.key) {
+      const keys = ['Enter', 'Tab'];
+      if (keys.includes(event.key)) {
          event.preventDefault();
-         this.$emit('formula:focusCell', event.key);
+         this.$emit('formula:done');
       }
    }
 }
