@@ -1,9 +1,8 @@
-export class DOM {
+class Dom {
    constructor(selector) {
-      this.$el =
-         typeof selector === 'string'
-            ? document.querySelector(selector)
-            : selector;
+      this.$el = typeof selector === 'string'
+         ? document.querySelector(selector)
+         : selector;
    }
 
    html(html) {
@@ -14,21 +13,19 @@ export class DOM {
       return this.$el.outerHTML.trim();
    }
 
-   clear() {
-      this.html('');
-      return this;
+   text(text) {
+      if (typeof text !== 'undefined') {
+         this.$el.textContent = text;
+         return this;
+      }
+      if (this.$el.tagName.toLowerCase() === 'input') {
+         return this.$el.value.trim();
+      }
+      return this.$el.textContent.trim();
    }
 
-   append(node) {
-      if (node instanceof DOM) {
-         node = node.$el;
-      }
-
-      if (Element.prototype.append) {
-         this.$el.append(node);
-      } else {
-         this.$el.append(node);
-      }
+   clear() {
+      this.html('');
       return this;
    }
 
@@ -40,19 +37,26 @@ export class DOM {
       this.$el.removeEventListener(eventType, callback);
    }
 
-   get data() {
-      return this.$el.dataset;
+   find(selector) {
+      return $(this.$el.querySelector(selector));
    }
 
-   id(parse) {
-      if (parse) {
-         const parsed = this.id().split(':');
-         return {
-            row: +parsed[0],
-            col: +parsed[1]
-         };
+   append(node) {
+      if (node instanceof Dom) {
+         node = node.$el;
       }
-      return this.data.id;
+
+      if (Element.prototype.append) {
+         this.$el.append(node);
+      } else {
+         this.$el.appendChild(node);
+      }
+
+      return this;
+   }
+
+   get data() {
+      return this.$el.dataset;
    }
 
    closest(selector) {
@@ -67,24 +71,6 @@ export class DOM {
       return this.$el.querySelectorAll(selector);
    }
 
-   find(selector) {
-      return $(this.$el.querySelector(selector));
-   }
-
-   addClass(classes) {
-      this.$el.classList.add(classes);
-      return this;
-   }
-
-   removeClass(className) {
-      this.$el.classList.remove(className);
-      return this;
-   }
-
-   toggleClass(className) {
-      this.$el.classList.toggle(className);
-   }
-
    css(styles = {}) {
       Object
          .keys(styles)
@@ -93,30 +79,56 @@ export class DOM {
          });
    }
 
+   getStyles(styles = []) {
+      return styles.reduce((res, s) => {
+         res[s] = this.$el.style[s];
+         return res;
+      }, {});
+   }
+
+   id(parse) {
+      if (parse) {
+         const parsed = this.id().split(':');
+         return {
+            row: +parsed[0],
+            col: +parsed[1]
+         };
+      }
+      return this.data.id;
+   }
+
    focus() {
       this.$el.focus();
       return this;
    }
 
-   text(text) {
-      if (typeof text === 'string') {
-         this.$el.textContent = text;
+   attr(name, value) {
+      if (value) {
+         this.$el.setAttribute(name, value);
          return this;
       }
-      return this.$el.textContent;
+      return this.$el.getAttribute(name);
    }
 
-   fn() {}
+   addClass(className) {
+      this.$el.classList.add(className);
+      return this;
+   }
+
+   removeClass(className) {
+      this.$el.classList.remove(className);
+      return this;
+   }
 }
 
 export function $(selector) {
-   return new DOM(selector);
+   return new Dom(selector);
 }
 
 $.create = (tagName, classes = '') => {
-   const $el = document.createElement(tagName);
+   const el = document.createElement(tagName);
    if (classes) {
-      $el.classList.add(classes);
+      el.classList.add(classes);
    }
-   return $($el);
+   return $(el);
 };
