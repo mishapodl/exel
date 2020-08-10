@@ -1,5 +1,5 @@
+import { toInlineStyles } from '@core/utils';
 import { defaultValues } from '@/constants';
-import { camelToDashCase } from '@core/utils';
 
 const CODES = {
    A: 65,
@@ -47,13 +47,13 @@ function getText(id, dataState) {
    return dataState[id] || '';
 }
 
-function toCell(row, { colState, dataState }) {
+function toCell(row, { colState, dataState, stylesState }) {
    return function (_, col) {
-      const id = row + ':' + col;
-      const styles = Object.keys(defaultValues)
-         .map(key => `${camelToDashCase(key)}:${defaultValues[key]};`)
-         .join('');
-
+      const id = `${row}:${col}`;
+      const styles = toInlineStyles({
+         ...defaultValues,
+         ...stylesState[id]
+      });
       return `
        <div 
           class="cell" 

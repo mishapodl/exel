@@ -25,6 +25,12 @@ export class TableSelection {
       this.group.forEach($el => $el.addClass(TableSelection.className));
    }
 
+   get selectedIds() {
+      return this.group.map($el => {
+         return $el.id();
+      });
+   }
+
    clear() {
       this.group.forEach($el => $el.removeClass(TableSelection.className));
       this.group = [];

@@ -39,8 +39,12 @@ export class Table extends ExcelComponent {
          this.selection.current.focus();
       });
 
-      this.$on('toolbar:applyStyles', styles => {
-         this.selection.applyStyles(styles);
+      this.$on('toolbar:applyStyles', value => {
+         this.selection.applyStyles(value);
+         this.$dispatch(actions.applyStyles({
+            value,
+            ids: this.selection.selectedIds
+         }));
       });
    }
 
