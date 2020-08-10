@@ -113,6 +113,14 @@ export class DOM {
       return this.$el.textContent;
    }
 
+   val(text) {
+      if (typeof text === 'string') {
+         this.$el.value = text;
+         return this;
+      }
+      return this.$el.value;
+   }
+
    fn() {}
 }
 

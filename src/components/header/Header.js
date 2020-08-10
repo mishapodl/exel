@@ -1,4 +1,7 @@
 import { ExcelComponent } from '@core/ExcelComponent';
+import { $ } from '@core/dom';
+import * as actions from '@/redux/actions';
+import { defaultTitle } from '@/constants';
 
 export class Header extends ExcelComponent {
    static className = 'excel__header';
@@ -6,7 +9,8 @@ export class Header extends ExcelComponent {
    constructor($root, options) {
       super($root, {
          name: 'Header',
-         listeners: [],
+         listeners: ['input'],
+         subscribe: ['title'],
          ...options
       });
    }
@@ -17,7 +21,7 @@ export class Header extends ExcelComponent {
             type="text"
             name=""
             class="input"
-            value="Название таблицы"
+            value="${this.store.getState().title || defaultTitle}"
          />
          <div>
             <div class="button">
@@ -28,5 +32,10 @@ export class Header extends ExcelComponent {
             </div>
          </div>
       `;
+   }
+
+   onInput(event) {
+      const $target = $(event.target);
+      this.$dispatch(actions.changeTitle($target.val()));
    }
 }

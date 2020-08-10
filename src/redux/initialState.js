@@ -1,5 +1,5 @@
 import { storage } from '@core/utils';
-import { defaultValues } from '@/constants';
+import { defaultValues, defaultTitle } from '@/constants';
 
 const defaultState = {
    colState: {},
@@ -8,6 +8,7 @@ const defaultState = {
    stylesState: {},
    currentText: '',
    currentStyles: defaultValues,
+   title: defaultTitle
 };
 
 const normalize = state => ({

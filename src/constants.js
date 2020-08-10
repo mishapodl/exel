@@ -4,3 +4,5 @@ export const defaultValues = {
    fontWeight: 'normal',
    fontStyle: 'normal'
 };
+
+export const defaultTitle = 'Название таблицы';

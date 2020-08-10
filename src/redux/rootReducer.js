@@ -2,7 +2,8 @@ import {
    CHANGE_STYLES,
    TABLE_RESIZE,
    CHANGE_TEXT,
-   APPLY_STYLES
+   APPLY_STYLES,
+   CHANGE_TITLE
 } from './types';
 
 export function rootReducer(state, action) {
@@ -40,6 +41,11 @@ export function rootReducer(state, action) {
                ...state.currentStyles,
                ...action.data.value
             }
+         };
+      case CHANGE_TITLE:
+         return {
+            ...state,
+            title: action.data
          };
       default:
          return state;
