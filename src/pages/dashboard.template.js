@@ -1,7 +1,10 @@
-function toHtml() {
+import { storage } from '@core/utils';
+
+function toHtml(key) {
+   const state = storage(key);
    return `
       <li class="db__record">
-         <a href="#">Таблица номер 1</a>
+         <a href="#${key.replace(':', '/')}">${state.title}</a>
          <strong>12.06.2020</strong>
       </li>
    `;
