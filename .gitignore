@@ -2,6 +2,7 @@
 node_modules/
 dist
 .prettierrc
-package-lock.json
+/.idea
 .idea/
+.idea
 .eslintrc
