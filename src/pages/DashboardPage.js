@@ -4,6 +4,7 @@ import { createDashboard } from '@/pages/dashboard.template';
 
 export class DashboardPage extends Page {
    getRoot() {
+      const now = Date.now().toString();
       return $.create('div', 'db').html(`
         <div class="db">
             <div class="db__header">
@@ -12,7 +13,7 @@ export class DashboardPage extends Page {
 
             <div class="db__new">
                <div class="db__view">
-                  <a href="#excel" class="db__create">
+                  <a href="#excel/${now}" class="db__create">
                      Новая <br />
                      Таблица
                   </a>
