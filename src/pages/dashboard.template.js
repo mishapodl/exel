@@ -2,10 +2,14 @@ import { storage } from '@core/utils';
 
 function toHtml(key) {
    const state = storage(key);
+
    return `
       <li class="db__record">
          <a href="#${key.replace(':', '/')}">${state.title}</a>
-         <strong>12.06.2020</strong>
+         <strong>
+            ${new Date(state.openedDate).toLocaleDateString()}
+            ${new Date(state.openedDate).toLocaleTimeString()}
+         </strong>
       </li>
    `;
 }
