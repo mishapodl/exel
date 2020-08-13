@@ -1,4 +1,3 @@
-// Pure functions
 export function capitalize(string) {
    if (typeof string !== 'string') {
       return '';
@@ -44,7 +43,6 @@ export function debounce(fn, wait) {
    return function (...args) {
       const later = () => {
          clearTimeout(timeout);
-         // eslint-disable-next-line
          fn.apply(this, args);
       };
       clearTimeout(timeout);
