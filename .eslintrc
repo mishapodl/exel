@@ -3,7 +3,8 @@
     "env": {
         "es6": true,
         "browser": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "rules": {
         "require-jsdoc": "off",
@@ -30,6 +31,7 @@
         "no-case-declarations": "off",
         "padded-blocks": "warn"
     },
+    "plugins": ["jest"],
     "extends": [
         "eslint:recommended",
         "google"
